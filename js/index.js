@@ -24,15 +24,18 @@ xhr.onload = function () {
             let news = `<div class="card">
                             <div class="card-header" id="heading${index}">
                                 <h2 class="mb-0">
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse${index}"
+                                <button class="btn btn-link collapsed" id="read" type="button" data-toggle="collapse" data-target="#collapse${index}"
                                     aria-expanded="false" aria-controls="collapse${index}">
-                                   <b>Breaking News ${index+1}:</b> ${element["title"]}
+                                   <b>Breaking News ${index+1}:</b>
+                                   ${element["title"]}
                                 </button>
                                 </h2>
                             </div>
 
                             <div id="collapse${index}" class="collapse" aria-labelledby="heading${index}" data-parent="#newsAccordion">
-                                <div class="card-body"> ${element["content"]}. <a href="${element['url']}" target="_blank" >Read more here</a>  </div>
+                                <div class="card-body">
+                               ${element["content"]}.<a href="${element['url']}" target="_blank" >Read more here</a> 
+                                </div>
                             </div>
                         </div>`;
             newsHtml += news;
@@ -45,3 +48,38 @@ xhr.onload = function () {
 }
 
 xhr.send()
+
+// and make search working
+
+let search = document.getElementById("searchTxt");
+search.addEventListener("input", function(){
+ 
+    let inputVal = search.value.toLowerCase();
+    // console.log('Input event fired!', inputVal);
+    let newsCard = document.getElementsByClassName('card');
+    Array.from(newsCard).forEach(function(element){
+
+        let cardTxt = element.getElementsByClassName("card-body")[0].innerText;
+        console.log(cardTxt);
+        if(cardTxt.includes(inputVal)){
+            element.style.display = "block";
+        }
+        else{
+            element.style.display = "none";
+        }
+
+
+    })
+
+})
+
+// var aTags = document.getElementsByTagName("p");
+// var searchText = "SearchingText";
+// var found;
+
+// for (var i = 0; i < aTags.length; i++) {
+//   if (aTags[i].textContent == searchText) {
+//     found = aTags[i];
+//     break;
+//   }
+// }
